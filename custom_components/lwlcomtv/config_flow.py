@@ -20,6 +20,7 @@ class LwlcomtvConfigFlow(ConfigFlow, domain=DOMAIN):
                 for item in response_json:
                     if item['unicastStream'] != '':
                         channels.append({
+                            'streamid': item['shorthand'],
                             'title': item['name'],
                             'logo': item['logo'],
                             'video': item['unicastStream']
