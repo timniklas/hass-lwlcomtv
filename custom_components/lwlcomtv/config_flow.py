@@ -25,7 +25,5 @@ class LwlcomtvConfigFlow(ConfigFlow, domain=DOMAIN):
                             'video': item['unicastStream']
                         })
                 return self.async_create_entry(title="LWLcom TV",data={'channels': channels})
-        except ClientResponseError as exc:
-            return self.async_abort(reason="authentication")
         except ClientError as exc:
-            return self.async_abort(reason="connenction")
+            return self.async_abort(reason="could not load channels")
