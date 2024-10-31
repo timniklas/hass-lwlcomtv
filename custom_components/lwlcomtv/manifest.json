@@ -1,0 +1,10 @@
+{
+  "domain": "lwlcomtv",
+  "name": "LWLcom TV",
+  "codeowners": ["@timniklas"],
+  "config_flow": true,
+  "documentation": "https://github.com/timniklas/hass-lwlcomtv",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/timniklas/hass-lwlcomtv/issues",
+  "version": "0.0.0"
+}
