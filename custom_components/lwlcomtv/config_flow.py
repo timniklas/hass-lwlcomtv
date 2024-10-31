@@ -1,7 +1,7 @@
 from homeassistant.config_entries import ConfigFlow
 from .const import DOMAIN
 
-class LwlcomConfigFlow(ConfigFlow, domain=DOMAIN):
+class LwlcomtvConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     def __init__(self) -> None:
