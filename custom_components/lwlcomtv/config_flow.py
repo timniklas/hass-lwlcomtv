@@ -26,4 +26,4 @@ class LwlcomtvConfigFlow(ConfigFlow, domain=DOMAIN):
                         })
                 return self.async_create_entry(title="LWLcom TV",data={'channels': channels})
         except ClientError as exc:
-            return self.async_abort(reason="could not load channels")
+            return self.async_abort(reason="channel_load")
