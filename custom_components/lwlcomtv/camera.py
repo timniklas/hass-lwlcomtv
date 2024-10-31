@@ -25,16 +25,20 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ):
     """Set up a Camera."""
+    entities = []
+    for channel in config_entry.data['channels']:
+        entities.append(
+            LwlcomtvCamera(hass, title = channel['title'], video = channel['video'], logo = channel['logo'])
+        )
 
-    async_add_entities([
-      LwlcomtvCamera(hass, title = "Test", video = "https://stream.iptv.lwlcom.net/hls/ch39/master.m3u8", logo = "https://static.iptv.lwlcom.net/logo/1e927ade-296d-4088-8e24-3e8575d02ae9.png")
-    ], True)
+    async_add_entities(entities, True)
 
 
 class LwlcomtvCamera(Camera):
 
     _attr_has_entity_name = True
     _attr_is_streaming = True
+    _attr_icon = "mdi:television-classic"
     _attr_supported_features = CameraEntityFeature.STREAM
     _options = "-pred 1"
 
@@ -54,12 +58,14 @@ class LwlcomtvCamera(Camera):
 
     async def stream_source(self) -> str:
         """Return the stream source."""
-        return self._url.split(" ")[-1]
+        return self._video.split(" ")[-1]
 
     async def async_camera_image(
         self, width: int | None = None, height: int | None = None
     ) -> bytes | None:
         """Return a still image response from the camera."""
+        if self._logo == None:
+            return None
 
         return await ffmpeg.async_get_image(
             self.hass,
@@ -70,7 +76,7 @@ class LwlcomtvCamera(Camera):
 
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from the camera."""
-      
+        
         stream = CameraMjpeg(self._manager.binary)
         await stream.open_camera(self._video, extra_cmd=self._options)
         try:
