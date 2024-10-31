@@ -27,7 +27,7 @@ async def async_setup_entry(
     """Set up a Camera."""
     entities = []
     for channel in config_entry.data['channels']:
-        entities.append(LwlcomtvCamera(hass, channel['title'], channel['video'], channel['logo']))
+        entities.append(LwlcomtvCamera(hass, channel['streamid'], channel['title'], channel['video'], channel['logo']))
 
     async_add_entities(entities, True)
 
@@ -40,13 +40,14 @@ class LwlcomtvCamera(Camera):
     _attr_supported_features = CameraEntityFeature.STREAM
     _options = "-pred 1"
 
-    def __init__(self, hass, title, video, logo):
+    def __init__(self, hass, streamid, title, video, logo):
         """Initialize."""
         super().__init__()
         self._manager = get_ffmpeg_manager(hass)
         self._video = video
         self._logo = logo
         self.name = title
+        self.unique_id = streamid
 
     @property
     def is_streaming(self) -> bool:
