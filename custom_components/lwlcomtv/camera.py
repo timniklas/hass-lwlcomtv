@@ -27,9 +27,7 @@ async def async_setup_entry(
     """Set up a Camera."""
     entities = []
     for channel in config_entry.data['channels']:
-        entities.append(
-            LwlcomtvCamera(hass, title = channel['title'], video = channel['video'], logo = channel['logo'])
-        )
+        entities.append(LwlcomtvCamera(hass, channel['title'], channel['video'], channel['logo']))
 
     async_add_entities(entities, True)
 
@@ -48,7 +46,6 @@ class LwlcomtvCamera(Camera):
         self._manager = get_ffmpeg_manager(hass)
         self._video = video
         self._logo = logo
-        self.unique_id = title
         self.name = title
 
     @property
