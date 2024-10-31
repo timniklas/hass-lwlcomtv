@@ -39,9 +39,6 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
     # This is called when you remove your integration or shutdown HA.
     # If you have created any custom services, they need to be removed here too.
 
-    # Remove the config options update listener
-    hass.data[DOMAIN][config_entry.entry_id].cancel_update_listener()
-
     # Unload platforms
     unload_ok = await hass.config_entries.async_unload_platforms(
         config_entry, PLATFORMS
