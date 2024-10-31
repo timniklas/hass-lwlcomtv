@@ -48,7 +48,7 @@ class LwlcomtvCamera(Camera):
         self._manager = get_ffmpeg_manager(hass)
         self._video = video
         self._logo = logo
-        self.unique_id = f"lwlcomtv-{title}"
+        self.unique_id = title
         self.name = title
 
     @property
